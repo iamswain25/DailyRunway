@@ -42,7 +42,7 @@ router.post('/create2', function (req, res) {
     const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");
     const uploadName = uuid.v4() + ".png";
     const imageFullPath = path.join(__dirname, '../data' , uploadName);
-    req.body.image = imageFullPath;
+    req.body.image = uploadName;
     fs.writeFile(imageFullPath, base64Data, 'base64', function (err) {
         if (err) { reject(err) }
         db.create(req.body)
@@ -50,12 +50,14 @@ router.post('/create2', function (req, res) {
             const ret = {};
             ret.resultFlag = true;
             ret.resultMsg = 'success';
+            ret.image = '/data/'+uploadName;
             res.set('Content-Type', 'text/json');
             res.send(ret);
         })
         .catch(err => {
             ret = {};
             ret.resultFlag = false;
+            ret.image = '/data/'+uploadName;
             ret.resultMsg = 'fail';
             res.set('Content-Type', 'text/json');
             res.send(ret);

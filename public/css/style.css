@@ -5,3 +5,26 @@
 }
 .flash{animation:flash .2s 0s linear 1}
 #flash{display: block;}
+.nav{margin:10px;}
+.wind {
+    width: 200px;
+}
+#TextColor {float: left;margin-left:20px;color: lawngreen;}
+.weather div{float:left;overflow: hidden;margin-left: 60px;}
+.weather {width: 1000px;height: 200px;margin: 20px;}
+.fs-big {font-size: 65px;margin: 0;}
+.fs-small {font-size: 20px;}
+.fs-tiny {font-size: 10px;}
+.weather .right {margin-left: 100px;/* float: right; */}
+.weather .middle {margin-left: 100px;}
+.wind img {width:  inherit;object-fit: contain;}
+dl{margin:0;}
+dt,dd {display: inline-block;}
+body{/* width: 1000px; */border: 3px solid black;margin: 0;overflow: hidden;}
+.top {/* padding: 20px; */position: absolute;width: 1000px;}
+.weather-cover{position: absolute;top: 0;height: 300px;background: grey;opacity: 0.5;width: 100%;}
+#canvas{position: absolute;}
+.recommend {width: 600px;height: 400px;overflow: hidden;margin: 0;list-style-type: none;display: block;}
+ul.recommend li {list-style-type: none;float: left;width: 150px;height: 150px;margin: 20px;overflow: hidden;}
+ul.recommend li img {width: inherit; object-fit: contain;}
+video{position: absolute;}

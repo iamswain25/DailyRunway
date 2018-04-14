@@ -50,6 +50,7 @@ app.use('/', router);
 app.use('/api', require('./routes/api.js'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
+app.use('/data', express.static(path.join(__dirname, 'data')));
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
     global.LOG.debug('Express server has started on port ' + port);

@@ -1,18 +1,72 @@
-<h2>what up!</h2>
-<form action="api/create" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" /><br>
-    <input type="hidden" name="temperature" value="23"/><br>
-    <input type="text" name="weather" value="sunny" /><br>
-    <input type="text" name="height" value="174"/><br>
-    <input type="text" name="user" value="swain"/><br>
-    <input type="text" name="gender" value="M"/><br>
-    <input type="text" name="country" value="korea"/><br>
-    <input type="text" name="ip" /><br>
-    <button>submit</button>
-</form>
-<div>
-    <form action="api/read" >
-        <input type="text" name="search" placeholder="type keword to search" value=""/>
-        <button>search</button>
-    </form>
-</div>
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="DailyRunway">
+    <meta name="keywords" content="DailyRunway">
+    <meta name="description" content="DailyRunway">
+    <script src="/tracking/build/tracking-min.js"></script>
+    <script src="/tracking/build/data/face-min.js"></script>
+    <script src="/axios/dist/axios.min.js"></script>
+    <script src="js/scripts.js" defer></script>
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <!-- <canvas id="canvas" width="1000" height="1000"></canvas> -->
+    <!-- <video></video> -->
+    <video id="video" width="1000" height="1000" preload autoplay loop muted></video>
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+    <div class="top">
+        <div class="weather-cover"></div>
+        <section>
+
+            <div class="weather">
+                <div class="wind">
+                    <img src="img/weather.png" />
+                </div>
+                <div class="middle">
+                    <p class="fs-big"><em class="temp">19</em> °C</p>
+                    <dl>
+                        <dt>Humidity</dt>
+                        <dd class="humidity">72</dd>%
+                    </dl>
+                    <dl>
+                        <dt>WIND</dt>
+                        <dd>wnw <em class="speed">4</em>km/h</dd>
+                    </dl>
+                </div>
+                <div class="right">
+                    <p class="fs-big">Seoul</p>
+                    <p class="fs-small time"></p>
+                </div>
+            </div>
+            <hr>
+            <ul class="recommend">
+                <li>
+                    <img src="img/top1.png" />
+                </li>
+                <li>
+                    <img src="img/top2.png" />
+                </li>
+                <li>
+                    <img src="img/top3.png" />
+                </li>
+                <li>
+                    <img src="img/bottom1.png" />
+                </li>
+                <li>
+                    <img src="img/bottom2.png" />
+                </li>
+                <li>
+                    <img src="img/bottom3.png" />
+                </li>
+            </ul>
+        </section>
+
+    </div>
+</body>
+
+</html>
