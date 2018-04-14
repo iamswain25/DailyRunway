@@ -1,1 +1,18 @@
-what up!
+<h2>what up!</h2>
+<form action="api/create" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" /><br>
+    <input type="hidden" name="temperature" value="23"/><br>
+    <input type="text" name="weather" value="sunny" /><br>
+    <input type="text" name="height" value="174"/><br>
+    <input type="text" name="user" value="swain"/><br>
+    <input type="text" name="gender" value="M"/><br>
+    <input type="text" name="country" value="korea"/><br>
+    <input type="text" name="ip" /><br>
+    <button>submit</button>
+</form>
+<div>
+    <form action="api/read" >
+        <input type="text" name="search" placeholder="type keword to search" value=""/>
+        <button>search</button>
+    </form>
+</div>

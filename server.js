@@ -41,7 +41,7 @@ app.use(cors({
 router.get('/', function (req, res, next) {
     req.session.destroy(function (err) {
         if (!err) {
-            res.render('index.html');
+            res.sendFile(path.join(__dirname+'/index.html'));
         }
     });
 });

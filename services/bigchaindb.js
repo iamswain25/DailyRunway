@@ -1,7 +1,7 @@
 const driver = require('bigchaindb-driver');
 const conn = new driver.Connection('https://test.bigchaindb.com/api/v1/', global.PROJECT_CONFIG.bigchaindb);
 const swain = new driver.Ed25519Keypair();
-const metadata = {};
+const metadata = null;
 
 exports.create = (assetdata) => {
     return new Promise((resolve) => {
@@ -17,6 +17,20 @@ exports.create = (assetdata) => {
         );
         const signedTx = driver.Transaction.signTransaction(tx, swain.privateKey)
         conn.postTransactionCommit(signedTx)
+            .then(retrievedTx =>{ 
+                global.LOG.debug(retrievedTx)
+                resolve(retrievedTx);
+            })
+            .catch((err)=>{
+                global.LOG.error(err.message);
+            });
+    });
+
+}
+
+exports.read = (search) => {
+    return new Promise((resolve) => {
+        conn.searchAssets(search)
             .then(retrievedTx =>{ 
                 global.LOG.debug(retrievedTx)
                 resolve(retrievedTx);
