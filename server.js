@@ -41,7 +41,7 @@ app.use(cors({
 router.get('/', function (req, res, next) {
     req.session.destroy(function (err) {
         if (!err) {
-            res.sendFile(path.join(__dirname+'/index.html'));
+            res.sendFile(path.join(__dirname+'/public/index.html'));
         }
     });
 });
@@ -49,6 +49,7 @@ router.get('/', function (req, res, next) {
 app.use('/', router);
 app.use('/api', require('./routes/api.js'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'node_modules')));
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
     global.LOG.debug('Express server has started on port ' + port);

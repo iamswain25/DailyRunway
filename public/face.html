@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>tracking.js - face with camera</title>
+    <script src="/axios/dist/axios.min.js"></script>
+    <script src="/tracking/build/tracking-min.js"></script>
+    <script src="/tracking/build/data/face-min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        video,
+        canvas {
+            position: absolute;
+        }
+
+        #flash {
+            height: 1080px;
+        }
+
+        /* video {display: none;} */
+    </style>
+</head>
+
+<body>
+    <div class="demo-frame">
+        <div class="demo-container">
+            <video id="video" width="600" height="400" preload autoplay loop muted></video>
+            <canvas id="canvas" width="600" height="400"></canvas>
+        </div>
+    </div>
+    <div id="flash"></div>
+
+    <script>
+        var temp,weather,gender,latitude,longitude,accuracy,height;
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        window.onload = function () {
+            var video = document.getElementById('video');
+            var tracker = new tracking.ObjectTracker('face');
+            tracker.setInitialScale(4);
+            tracker.setStepSize(2);
+            tracker.setEdgesDensity(0.1);
+            tracking.track('#video', tracker, { camera: true });
+            var cameraTimer = 0;
+            setInterval(function () {
+                --cameraTimer;
+                document.querySelector("#flash").classList.remove("flash");
+            }, 1000);
+            tracker.on('track', function (event) {
+                // console.log(cameraTimer);
+                if (cameraTimer > 0) {
+                    return true;
+                }
+                if (event.data.length > 0 && event.data[0].total > 2) {
+                    cameraTimer = 5;
+                    console.log(event.data[0]);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    event.data.forEach(function (rect) {
+                        context.strokeStyle = '#a64ceb';
+                        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+                        context.font = '11px Helvetica';
+                        context.fillStyle = "#fff";
+                        context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
+                        context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
+                    });
+                    document.querySelector("#flash").classList.toggle("flash");
+                    sendPicture();
+                }
+                else {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            });
+        };
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+
+        function success(pos) {
+            var crd = pos.coords;
+
+            console.log('Your current position is:');
+            console.log(`Latitude : ${crd.latitude}`);
+            console.log(`Longitude: ${crd.longitude}`);
+            console.log(`More or less ${crd.accuracy} meters.`);
+        }
+
+        function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+        function sendPicture() {
+            axios.post('/api/create2', {
+                image: canvas.toDataURL(),
+                temp: temp,
+                weather: weather,
+                gender: gender,
+                latitude: latitude,
+                longitude: longitude,
+                accuracy: accuracy,
+                height: height
+            })
+            .then(function(response){
+                console.log(response);
+            });
+        }
+
+        function getWeather(){
+            axios.get("https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22Seoul%22)%20and%20u%3D'c'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys")
+            .then(function(response){
+                console.log(response.data.query.results.channel.item.conditions);
+                var conditions = response.data.query.results.channel.item.conditions;
+                weather = conditions.text;
+                temp = conditions.temp;
+            });
+        }
+        getWeather();
+    </script>
+
+</body>
+
+</html>

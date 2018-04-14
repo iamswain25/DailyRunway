@@ -1,0 +1,7 @@
+@keyframes flash{
+0%{background-color:transparent;opacity:0}
+50%{background-color:#fff;opacity:1}
+100%{background-color:transparent;opacity:0;display:none}
+}
+.flash{animation:flash .2s 0s linear 1}
+#flash{display: block;}

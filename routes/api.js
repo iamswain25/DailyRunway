@@ -37,6 +37,31 @@ router.post('/create', function (req, res) {
         res.send(ret);
     });
 });
+router.post('/create2', function (req, res) {
+    const base64Image = req.body.image;
+    const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");
+    const uploadName = uuid.v4() + ".png";
+    const imageFullPath = path.join(__dirname, '../data' , uploadName);
+    req.body.image = imageFullPath;
+    fs.writeFile(imageFullPath, base64Data, 'base64', function (err) {
+        if (err) { reject(err) }
+        db.create(req.body)
+        .then(retrievedTx => {
+            const ret = {};
+            ret.resultFlag = true;
+            ret.resultMsg = 'success';
+            res.set('Content-Type', 'text/json');
+            res.send(ret);
+        })
+        .catch(err => {
+            ret = {};
+            ret.resultFlag = false;
+            ret.resultMsg = 'fail';
+            res.set('Content-Type', 'text/json');
+            res.send(ret);
+        });
+    });
+});
 
 
 router.get('/read', function (req, res) {
