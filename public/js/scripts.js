@@ -124,10 +124,8 @@ function sendPicture() {
     // .then(function(response){
     // document.querySelector(".top").classList.remove("flash");
     // document.querySelector("ul.recommend").classList.remove("dp_none");
-    canvas.classList.remove("flash");
-    context2.clearRect(0, 0, canvas.width, canvas.height);
-    console.log(response);
-    document.querySelector("ul.recommend").children.item(0).children.item(0).src = response.data.image;
+    // context2.clearRect(0, 0, canvas.width, canvas.height);
+    document.querySelector("ul.recommend").children.item(0).children.item(0).src = canvas2.toDataURL();
     // }).catch(function(response){
     //     canvas.classList.remove("flash");
     //     context2.clearRect(0, 0, canvas.width, canvas.height);
