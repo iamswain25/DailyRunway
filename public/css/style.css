@@ -28,3 +28,5 @@ body{/* width: 1000px; */border: 3px solid black;margin: 0;overflow: hidden;}
 ul.recommend li {list-style-type: none;float: left;width: 150px;height: 150px;margin: 20px;overflow: hidden;}
 ul.recommend li img {width: inherit; object-fit: contain;}
 video{position: absolute;}
+.dp_none {display: none!important;}
+.recommend{transition: opacity 0.3s;}

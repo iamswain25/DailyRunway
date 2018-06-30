@@ -43,12 +43,12 @@ tracker.on('track', function (event) {
             context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
             context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
         });
-        
+
         sendPicture();
     }
-    // else {
-    //     context.clearRect(0, 0, canvas.width, canvas.height);
-    // }
+    else {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
 });
 dateSetting();
 getWeather();
@@ -110,22 +110,28 @@ function sendPicture() {
     context2.drawImage(video, 0, 0, 100, 100);
     // document.querySelector(".top").classList.toggle("flash");
     canvas.classList.toggle("flash");
-    
-    axios.post('/api/create2', {
-        image: canvas2.toDataURL(),
-        temp: temp,
-        windspeed: wind.speed,
-        weather: weather,
-        latitude: latitude,
-        longitude: longitude,
-        accuracy: accuracy,
-        humidity: atmosphere.humidity,
-    })
-    .then(function(response){
-        // document.querySelector(".top").classList.remove("flash");
-        canvas.classList.remove("flash");
-        context2.clearRect(0, 0, canvas.width, canvas.height);
-        console.log(response);
-        document.querySelector("ul.recommend").children.item(0).children.src = response.image;
-    });
+    // document.querySelector("ul.recommend").classList.add("dp_none");
+    // axios.post('/api/create2', {
+    //     image: canvas2.toDataURL(),
+    //     temp: temp,
+    //     windspeed: wind.speed,
+    //     weather: weather,
+    //     latitude: latitude.toString(),
+    //     longitude: longitude.toString(),
+    //     accuracy: accuracy.toString(),
+    //     humidity: atmosphere.humidity,
+    // })
+    // .then(function(response){
+    // document.querySelector(".top").classList.remove("flash");
+    // document.querySelector("ul.recommend").classList.remove("dp_none");
+    canvas.classList.remove("flash");
+    context2.clearRect(0, 0, canvas.width, canvas.height);
+    console.log(response);
+    document.querySelector("ul.recommend").children.item(0).children.item(0).src = response.data.image;
+    // }).catch(function(response){
+    //     canvas.classList.remove("flash");
+    //     context2.clearRect(0, 0, canvas.width, canvas.height);
+    //     console.log(response);
+    //     document.querySelector("ul.recommend").children.item(0).children.item(0).src = response.data.image;
+    // });
 }
